@@ -8,8 +8,8 @@ problem_id: "MP113"
 
 data_issues:
   leaking_column:
-    present: true
-    column: litres_per_day
+    present: false
+    column: null
 
   unit_mixup:
     present: true
