@@ -1,0 +1,43 @@
+base:
+  project: G173_MP113
+  target_col: litres_per_day
+  random_state: 42
+
+data:
+  raw_train_path: data/raw/train.csv
+  raw_later_path: data/raw/later.csv
+  holdout_path: data/raw/holdout_features.csv
+  processed_dir: data/processed
+
+tracking:
+  experiment_name: fuel_station_daily_sales
+  tracking_uri: sqlite:///mlflow.db
+  registered_model_name: mp113_fuel_sales_model
+
+train:
+  test_size: 0.2
+  models:
+    ridge:
+      alpha: 1.0
+    random_forest:
+      n_estimators: 100
+      max_depth: 8
+      random_state: 42
+    gradient_boosting:
+      n_estimators: 120
+      learning_rate: 0.08
+      max_depth: 4
+      random_state: 42
+
+features:
+  numeric_cols:
+    - highway_distance_km
+    - nearby_pumps
+    - price_rs
+    - trucks_passing
+    - temp_c
+    - staff
+  categorical_cols:
+    - ownership
+    - zone
+

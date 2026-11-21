@@ -108,21 +108,41 @@ The project is organized into different folders for data, source code, reports, 
 ```text
 G173_MP113/
 │
+├── .dvc/
+├── .github/workflows/
+│   └── ci.yml
+├── app/
+│   └── main.py
 ├── data/
 │   └── raw/
-│
+│       ├── holdout_features.csv
+│       ├── later.csv.dvc
+│       └── train.csv.dvc
+├── models/
+│   └── model.joblib
 ├── reports/
 │   ├── findings.yaml
 │   └── analysis_output.txt
-│
 ├── src/
-│   └── check_data.py
-│
-├── .dvc/
+│   ├── check_data.py
+│   └── fuel_sales/
+│       ├── __init__.py
+│       ├── data.py
+│       └── train.py
+├── tests/
+│   ├── __init__.py
+│   ├── test_api.py
+│   ├── test_data.py
+│   └── test_model.py
 ├── .dvcignore
-├── README.md
+├── .gitignore
 ├── GROUP.md
-└── PROBLEM.md
+├── PROBLEM.md
+├── README.md
+├── STUDENT_HANDBOOK.md
+├── mlflow.db
+├── params.yaml
+└── requirements.txt
 ```
 
 Additional files and folders will be added as the MLOps pipeline is developed.

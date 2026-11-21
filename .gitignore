@@ -1,0 +1,17 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest cache
+.pytest_cache/
+
+# MLflow model artifacts (mlflow.db is committed as per handbook rules)
+mlruns/
+mlartifacts/
+
+# Virtual environments
+venv/
+.venv/
+env/
+

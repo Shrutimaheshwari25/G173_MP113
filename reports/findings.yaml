@@ -1,56 +1,41 @@
-# MP113 findings --- fill in every value, keep every key.
-# The marking tool reads this file. Write null only where the comment says so.
-# Use the exact column names and group values from your data files.
-
-group_id: "G173"          # your group id, e.g. "G042"
-problem_id: "MP113"
-
-
+group_id: G173
+problem_id: MP113
 data_issues:
   leaking_column:
     present: false
     column: null
-
   unit_mixup:
     present: true
     column: highway_distance_km
     group_value: Industrial
     factor: 1000
-
   sentinel_value:
     present: false
     column: null
     value: null
     count: null
-
   duplicate_rows:
     present: true
     count: 60
-
   stuck_sensor:
     present: true
     column: temp_c
-    start_date: "2026-02-08"
-    end_date: "2026-02-22"
-
+    start_date: '2026-02-08'
+    end_date: '2026-02-22'
   target_typos:
     present: false
     count: null
-
   spelling_variants:
     present: true
     column: ownership
     true_levels: 3
-      # how many real categories there are after cleaning
-
 tracking:
-  experiment_name: null
-  best_run_id: null        # the MLflow run id of your v1 model
-  registered_model_name: null
-  champion_version: null
-
+  experiment_name: fuel_station_daily_sales
+  best_run_id: 94a74c7b63464f38a012389ac978f31f
+  registered_model_name: mp113_fuel_sales_model
+  champion_version: 1
 monitoring:
-  psi:                     # cleaned train.csv vs later.csv, 10 bins
+  psi:
     highway_distance_km: null
     nearby_pumps: null
     price_rs: null
@@ -58,11 +43,11 @@ monitoring:
     temp_c: null
     staff: null
   most_drifted_feature: null
-  mae_by_group:            # v1 on later.csv, per value of zone
-    'Highway': null
-    'City': null
-    'Industrial': null
+  mae_by_group:
+    Highway: null
+    City: null
+    Industrial: null
   worst_served_group: null
-  mae_v1_on_check: null    # v1 on the last 30% of later.csv (by date)
-  mae_v2_on_check: null    # v2 on the same rows
-  decision: null           # promote or keep
+  mae_v1_on_check: null
+  mae_v2_on_check: null
+  decision: null
