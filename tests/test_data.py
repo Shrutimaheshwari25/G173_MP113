@@ -52,3 +52,32 @@ def test_build_preprocessor():
     assert transformed.shape[0] == 2
     assert transformed.shape[1] >= 4
 
+def test_clean_ownership_edge_cases():
+    """Verify that None or unexpected values fallback safely."""
+    assert clean_ownership(None) == "public_sector"
+    assert clean_ownership("random_unknown_type") == "public_sector"
+    assert clean_ownership("PRIVATE_PUMP") == "private"
+
+
+def test_clean_data_stuck_sensor_interpolation():
+    """Verify stuck sensor interpolation between 2026-02-08 and 2026-02-22."""
+    df_stuck = pd.DataFrame({
+        "record_id": ["S1", "S2", "S3"],
+        "date": ["2026-02-07", "2026-02-15", "2026-02-23"],
+        "temp_c": [20.0, 37.1, 30.0],
+        "zone": ["City", "City", "City"],
+        "highway_distance_km": [5.0, 5.0, 5.0]
+    })
+    cleaned = clean_data(df_stuck, is_train=True)
+    # The stuck middle reading (37.1) should interpolate linearly to 25.0
+    assert cleaned.loc[cleaned["date"] == "2026-02-15", "temp_c"].iloc[0] == 25.0
+
+
+def test_clean_data_normal_zone_distance_unchanged():
+    """Verify highway distance for Highway/City is not divided."""
+    df = pd.DataFrame({
+        "highway_distance_km": [15.0, 8.5],
+        "zone": ["Highway", "City"]
+    })
+    cleaned = clean_data(df, is_train=False)
+    assert cleaned["highway_distance_km"].tolist() == [15.0, 8.5]
