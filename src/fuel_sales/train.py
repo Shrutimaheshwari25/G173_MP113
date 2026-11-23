@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import Ridge
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.pipeline import Pipeline
-from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import mean_absolute_error, root_mean_squared_error, r2_score
 
 from src.fuel_sales.data import clean_data, build_preprocessor
 
@@ -96,6 +96,10 @@ def train_models():
 
             train_mae = mean_absolute_error(y_train, train_preds)
             val_mae = mean_absolute_error(y_val, val_preds)
+            train_rmse = root_mean_squared_error(y_train, train_preds)
+            val_rmse = root_mean_squared_error(y_val, val_preds)
+            train_r2 = r2_score(y_train, train_preds)
+            val_r2 = r2_score(y_val, val_preds)
 
             # Log parameters
             mlflow.log_param("data_sha256", data_sha)
@@ -108,6 +112,10 @@ def train_models():
             mlflow.log_metric("mae_train", train_mae)
             mlflow.log_metric("mae", val_mae)
             mlflow.log_metric("mae_val", val_mae)
+            mlflow.log_metric("rmse_train", train_rmse)
+            mlflow.log_metric("rmse_val", val_rmse)
+            mlflow.log_metric("r2_train", train_r2)
+            mlflow.log_metric("r2_val", val_r2)
 
             # Log model with cloudpickle
             mlflow.sklearn.log_model(
@@ -120,10 +128,15 @@ def train_models():
                 "model_name": model_name,
                 "run_id": run.info.run_id,
                 "val_mae": val_mae,
+                "val_rmse": val_rmse,
+                "val_r2": val_r2,
                 "pipeline": pipeline
             })
 
-            print(f"Run {model_name} (ID: {run.info.run_id}) - Validation MAE: {val_mae:.4f}")
+            print(
+                f"Run {model_name} (ID: {run.info.run_id}) - "
+                f"Validation MAE: {val_mae:.4f}, RMSE: {val_rmse:.4f}, R2: {val_r2:.4f}"
+            )
 
     # 4. Select best model based on validation MAE
     best_run = min(runs_info, key=lambda r: r["val_mae"])

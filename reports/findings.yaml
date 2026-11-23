@@ -31,9 +31,9 @@ data_issues:
     true_levels: 3
 tracking:
   experiment_name: fuel_station_daily_sales
-  best_run_id: 94a74c7b63464f38a012389ac978f31f
+  best_run_id: be7f49a5885e4e099e30d958542c28bb
   registered_model_name: mp113_fuel_sales_model
-  champion_version: 1
+  champion_version: 2
 monitoring:
   psi:
     highway_distance_km: null
