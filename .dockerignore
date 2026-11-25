@@ -1,0 +1,40 @@
+# Version control
+.git/
+.gitignore
+
+# DVC and Data files
+.dvc/
+.dvcignore
+data/raw/*.csv
+data/processed/
+
+# MLflow and tracking artifacts
+mlruns/
+mlartifacts/
+mlflow.db
+
+# Python caches and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Testing and coverage caches
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Kubernetes manifests and CI workflows (not needed in container image)
+k8s/
+.github/
+
+# Documentation and project reports
+reports/
+*.md
